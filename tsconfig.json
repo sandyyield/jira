@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src", //配置绝对路径,防止import多余嵌套
     "target": "es5",
     "lib": [
       "dom",
