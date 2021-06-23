@@ -1,13 +1,15 @@
-import React from 'react';
-import './App.css';
+import './App.less';
 // import { ProjectListScreen } from 'screens/project-list';
 import { LoginScreen } from 'screens/login';
+import { AuthProvider } from 'context/auth-context';
 
 function App() {
   return (
     <div className="App">
       {/* <ProjectListScreen /> */}
-      <LoginScreen />
+      <AuthProvider>
+        <LoginScreen />
+      </AuthProvider>
     </div>
   );
 }
