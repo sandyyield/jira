@@ -1,10 +1,12 @@
 
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from "context/auth-context";
 import { useHttp } from "utils/http";
 
 import './login.less'
+import { NavLink, useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export interface LoginParam {
     username: string;
@@ -17,23 +19,20 @@ export const LoginScreen = () => <Login />
 //antd Form组件
 const NormalLoginForm = () => {
 
-    const { login, user, logout, setUser } = useAuth()
+    const { login, user, logout, setUser } = useAuth();
+    const history = useHistory();
 
-    const onFinish = (val: { username: string, password: string }) => {
+    const onFinish = async (val: { username: string, password: string }) => {
         login(val);
     }
 
-    //debug
-    const httper = useHttp();
+    useEffect(() => {
+        if (user && user.token) {
+            history.push(`/home`);
+        }
+    }, [user])
 
-    const handleClick = async () => {
-        httper('member/getuserinfo2');
-    }
 
-    const handleClick2 = async () => {
-        logout();
-        setUser(null);
-    }
 
     return (
         <Form
@@ -93,13 +92,9 @@ const NormalLoginForm = () => {
                 </Button>
                 {/* Or <a href="">register now!</a> */}
             </Form.Item>
-            <Button onClick={handleClick}>test token</Button>
-            <Button onClick={handleClick2}>login out</Button>
-            {user ? <div>
-                登录成功,用户名:{user?.name},{user.token}
-            </div> : null}
-        </Form>
-            
+
+        </Form >
+
     )
 }
 
@@ -107,9 +102,9 @@ const NormalLoginForm = () => {
 const Login = () => {
     return (
         <div className='login'>
-            <header>
+            {/* <header>
                 <h1>Jira</h1>
-            </header>
+            </header> */}
             <section>
                 <h1>用户登陆</h1>
                 <NormalLoginForm />

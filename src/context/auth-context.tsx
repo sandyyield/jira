@@ -4,7 +4,7 @@ import { User } from "screens/project-list/search-panel";
 import { http } from "utils/http";
 import { useMount } from "utils";
 
-interface AuthForm {
+type AuthForm = {
     username: string;
     password: string;
 }
